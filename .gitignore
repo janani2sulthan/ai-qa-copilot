@@ -23,7 +23,6 @@ results_*.txt
 generated_tests/
 uploads/
 figma_cache/
-features
 
 # Logs
 *.log

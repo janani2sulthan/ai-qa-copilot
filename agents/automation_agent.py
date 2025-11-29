@@ -124,3 +124,30 @@ Testcases JSON:
             f.write(gherkin)
 
         return feature_path
+
+    def sync_gherkin_to_pytest(self, feature_file: str, out_py: str):
+        with open(feature_file, "r") as f:
+            gherkin = f.read()
+
+        prompt = f"""
+    Convert this Gherkin feature file into Python pytest test methods.
+
+    STRICT RULES:
+    - Output ONLY Python code
+    - One pytest test per Scenario
+    - Use Playwright sync API
+    - Do NOT change scenario titles
+
+    Gherkin:
+    {gherkin}
+    """
+
+        code = self.lm.generate(prompt)
+
+        clean = self._clean_code(code)
+
+        os.makedirs(os.path.dirname(out_py), exist_ok=True)
+        with open(out_py, "w", encoding="utf-8") as f:
+            f.write(clean)
+
+        return out_py

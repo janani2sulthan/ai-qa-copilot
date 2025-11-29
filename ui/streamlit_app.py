@@ -86,6 +86,8 @@ with middle:
     analyze_btn = col_a.button("Analyze Feature (Extract Context)")
     gen_tc_btn = col_b.button("Generate Test Cases")
     gen_auto_btn = col_c.button("Generate Automation")
+    gen_gherkin_btn = st.button("Generate Gherkin Feature")
+    sync_btn = st.button("Sync Pytest from Gherkin")
     run_tests_btn = st.button("Run Tests")
     publish_btn = st.button("Publish to Jira/Xray")
 
@@ -346,3 +348,35 @@ if publish_btn:
                 publish_placeholder.write(f"XRAY response: {r.status_code}")
             except Exception as e:
                 publish_placeholder.error(f"XRAY post failed: {e}")
+
+if gen_gherkin_btn:
+    gen_dir = Path("generated_tests")
+    last_tc = None
+    if gen_dir.exists():
+        files = sorted([p for p in gen_dir.glob("testcases_*.json")],
+                       key=lambda p: p.stat().st_mtime, reverse=True)
+        if files:
+            last_tc = files[0]
+
+    if not last_tc:
+        st.warning("No testcases found. Generate testcases first.")
+    else:
+        tcs = json.loads(last_tc.read_text())
+        feature_path = gen_dir / f"{tcs.get('feature_id','feat_demo')}.feature"
+        auto_agent.synthesize_behave_feature(tcs, str(feature_path))
+        st.success(f"Gherkin feature generated: {feature_path}")
+        st.code(feature_path.read_text(), language="gherkin")
+
+if sync_btn:
+    gen_dir = Path("generated_tests")
+    feature_files = sorted([p for p in gen_dir.glob("*.feature")],
+                           key=lambda p: p.stat().st_mtime, reverse=True)
+
+    if not feature_files:
+        st.warning("No feature file found. Generate Gherkin first.")
+    else:
+        feature_file = feature_files[0]
+        out_py = gen_dir / f"test_suite_{feature_file.stem}.py"
+        auto_agent.sync_gherkin_to_pytest(str(feature_file), str(out_py))
+        st.success(f"Pytest updated from Gherkin: {out_py}")
+        st.code(out_py.read_text(), language="python")
