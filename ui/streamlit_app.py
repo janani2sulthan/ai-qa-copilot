@@ -33,8 +33,8 @@ from agents.clarifier_agent import ClarifierAgent
 
 
 # UI layout settings
-st.set_page_config(page_title="IntelliQA — Enterprise UI", layout="wide")
-st.title("IntelliQA — Interactive Multi-Agent QA Assistant")
+st.set_page_config(page_title="AI QA Co-Pilot — Enterprise UI", layout="wide")
+st.title("AI QA Co-Pilot — Interactive Multi-Agent QA Assistant")
 
 # ------------------------------
 # INIT CONVERSATION MEMORY
