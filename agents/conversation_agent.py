@@ -4,24 +4,18 @@ from typing import List, Dict, Any
 
 class ConversationAgent:
 
-    def __init__(self, mem=None, conv_id="default_conv"):
-        self.history = []
+    def __init__(self, mem, conv_id="default"):
         self.mem = mem
         self.conv_id = conv_id
+        self.history = mem.load_conversation(conv_id) or []
 
-        # load old conversation if available
-        if mem:
-            old = mem.load_conversation(conv_id)
-            if old:
-                self.history = old
-
-    def add_user_msg(self, text: str):
+    def add_user_msg(self, text):
         self.history.append({"role": "user", "text": text})
-        self.save()
+        self.mem.save_conversation(self.conv_id, self.history)
 
-    def add_agent_msg(self, text: str):
+    def add_agent_msg(self, text):
         self.history.append({"role": "agent", "text": text})
-        self.save()
+        self.mem.save_conversation(self.conv_id, self.history)
 
     def get_context(self) -> str:
         """Convert history to a prompt-friendly text block."""
