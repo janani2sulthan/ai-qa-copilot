@@ -1,0 +1,46 @@
+# Virtual environments
+venv/
+.env
+*.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+.cache/
+.python-version
+
+# Streamlit & runtime
+uploads/
+memory_store.db
+*.db
+results_*.txt
+
+# Generated test suites
+generated_tests/
+uploads/
+figma_cache/
+
+# Logs
+*.log
+
+# Images / media
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp4
+*.mov
+*.svg
+*.webp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
