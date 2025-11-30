@@ -252,6 +252,164 @@ Feature: Login
     Then I should see an error message
 ```
 
+
+# Worked Example
+---
+
+### 📌 Input: User Story
+
+```text
+As a user, I want to log into the application using my email and password so that I can access my dashboard.
+
+Acceptance Criteria:
+- User can enter email
+- User can enter password
+- Login button becomes enabled when both fields are filled
+- Show error message for invalid credentials
+- Redirect to dashboard on successful login
+```
+
+### 🧠 Step 1 — RequirementAgent Output (Extracted Requirements)
+
+```
+Flows:
+- Valid login flow
+- Invalid login flow
+
+Validations:
+- Email field must allow valid email formats
+- Password required
+- Login button enabled only when inputs are valid
+
+Edge Cases:
+- Empty fields
+- Incorrect password
+- Invalid email format
+```
+
+### 🧪 Step 2 — TestCaseAgent Output (Structured JSON Testcases)
+
+```json
+{
+  "feature_id": "login",
+  "test_cases": [
+    {
+      "id": "TC_LOGIN_001",
+      "title": "Login with valid credentials",
+      "priority": "P0",
+      "type": "functional",
+      "steps": [
+        "Open login page",
+        "Enter valid email",
+        "Enter valid password",
+        "Click Login"
+      ],
+      "expected": "User is redirected to dashboard"
+    },
+    {
+      "id": "TC_LOGIN_002",
+      "title": "Login with invalid credentials",
+      "priority": "P1",
+      "type": "negative",
+      "steps": [
+        "Open login page",
+        "Enter valid email",
+        "Enter invalid password",
+        "Click Login"
+      ],
+      "expected": "Error message displayed"
+    }
+  ]
+}
+```
+
+### 🤖 Step 3 — AutomationAgent Output (Playwright + PyTest)
+
+```python
+def test_login_valid(page):
+    page.goto("https://app.example.com/login")
+    page.fill("#email", "user@example.com")
+    page.fill("#password", "Correct@123")
+    page.click("button[type=submit']")
+    assert "/dashboard" in page.url
+```
+
+### 🚀 Step 4 — ExecutionAgent Output
+
+```output
+Test Execution Summary:
+✓ 2 tests passed  
+⏱ Duration: 3.2s  
+Logs saved to /generated_tests/logs/login/
+```
+
+### 📌 Step 5 — JiraAgent Output
+```
+✓ Testcases uploaded to JIRA-123  
+✓ Execution results attached  
+```
+
+# ⚠️ Limitations & Future Work
+
+Although AI QA Co-Pilot is already powerful, the following areas can be improved for enterprise-level robustness:
+
+---
+
+### 🚧 Current Limitations
+
+1. LLM-Generated Automation Is Not Always Deterministic
+	•	Playwright selectors may vary slightly between runs.
+	•	Dynamic IDs or complex shadow DOM structures require extra post-processing.
+
+2. BDD (Gherkin) Support Is Basic
+	•	Feature files are generated successfully,
+but step definition auto-generation is limited.
+
+3. Limited Vision Validation
+	•	Screenshot understanding works for simple UI screens.
+	•	Complex UI (carousels, nested modals) may require manual validation.
+
+4. Jira/Xray Schema Variability
+	•	Different Jira installations have different fields,
+which may require custom mapping.
+
+5. No Full “CI Pipeline Runner” Yet
+	•	Tests execute locally.
+	•	GitHub Actions/Cloud Run execution is possible but not fully integrated.
+
+6. Memory Store Not Optimized for Large-Scale QA Data
+	•	SQLite is ideal for single-user development.
+	•	For multi-user enterprise mode, Postgres or Redis-based memory would be preferable.
+
+----
+
+# 🚀 Future Enhancements
+
+1. Auto-Fixing Failing Automation Scripts
+	•	Rerun tests, detect failing selectors, regenerate only broken steps.
+
+2. Full BDD Lifecycle Support
+	•	Auto-generate step definitions
+	•	Auto-map steps to UI actions automatically
+
+3. Deployment-ready Cloud Agent Runtime
+	•	One-click deploy to GCP Cloud Run / Streamlit Cloud.
+
+4. Multi-Agent Parallel Execution
+	•	Generate test cases + automation + Jira updates in parallel.
+
+5. Vision+Figma Deep Layout Understanding
+	•	Detect clickable regions, text inputs, component types automatically.
+
+6. Enterprise Memory System
+	•	Semantic memory with vector embedding stores for 100+ features.
+
+7. API Monitoring & Contract Testing
+	•	Automatic test generation for OpenAPI Specs
+	•	API drift detection
+
+---
+
 # 📌 Tech Used
 
 - **Python**
@@ -264,9 +422,6 @@ Feature: Login
 - **Jira REST API**
 
 ---
-
-# 🎥 Demo
-If you upload a YouTube demo, add it here:
 
 # ⭐ Final Notes  
 This project demonstrates:
