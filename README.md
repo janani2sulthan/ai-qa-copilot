@@ -1,205 +1,108 @@
-# 🚀 AI QA Co-Pilot  
-### **An Interactive Multi-Agent QA Automation Assistant Powered by Gemini**
+# 🤖 AI QA Copilot
 
-Enterprise-grade, autonomous QA system that analyzes requirements, generates test cases, writes automation scripts, executes tests, and updates Jira — all through an intelligent multi-agent architecture.
+**AI QA Copilot** is an AI-powered assistant that helps QA engineers automate key testing activities such as **test case generation, test analysis, and QA workflow support** using LLM-based agent concepts.
 
----
-
-## 🌟 Overview
-
-AI QA Co-Pilot is a **multi-agent, memory-enabled QA assistant** built to automate the entire QA lifecycle.  
-Unlike traditional test generators, this system:
-
-- **Understands** requirements  
-- **Asks clarifying questions**  
-- **Generates complete structured test cases**  
-- **Writes Playwright/Pytest automation**  
-- **Executes tests locally**  
-- **Publishes results to Jira/Xray**  
-- **Understands Figma & Screenshots**  
-- **Retains context using persistent memory**  
-
-It behaves like a *smart QA engineer* — fast, consistent, and always available.
+This project was initially built as part of the **5-Day AI Agents Intensive Course with Google (via Kaggle)** and later extended locally with additional real-world features.
 
 ---
 
-# 🧠 Core Features
+## 🚀 Project Overview
 
-## 1️⃣ Requirement Analysis  
-- Extracts acceptance criteria  
-- Identifies flows, validations, edge cases  
-- Parses screenshots & Figma designs  
+Modern QA workflows involve repetitive and time-consuming tasks such as understanding requirements, writing test cases, and managing test artifacts across tools.
 
-## 2️⃣ Intelligent Test Case Generation  
-- Functional / negative / edge cases  
-- API + UI test cases  
-- Structured JSON output  
-- BDD (Given/When/Then) support  
-- Full sprint-coverage test planning  
+AI QA Copilot aims to **assist QA engineers** by introducing **AI agents** that can:
+- Understand user stories or requirements
+- Generate structured manual test cases
+- Support automation-ready outputs
+- Integrate with QA management tools
 
-## 3️⃣ Automation Generation  
-Supports:
-- **Playwright (Python)**
-- **PyTest UI automation**
-- API Test automation  
-
-Generated code adheres to:
-- Page Object Model (POM)  
-- Reusable locator structure  
-- Clean coding practices  
-
-## 4️⃣ Test Execution  
-- Runs automation via PyTest  
-- Captures logs + output  
-- Provides pass/fail summary  
-
-## 5️⃣ Jira / Xray Integration  
-- Uploads test cases  
-- Posts test execution results  
-- Maintains traceability  
-
-## 6️⃣ Vision + Figma Understanding  
-- Extracts UI structure from screenshots  
-- Knows screen flows and components  
-- Reads Figma nodes + layers  
-
-## 7️⃣ Memory + Conversation  
-- Persistent SQLite memory  
-- Saves feature-level context  
-- Saves conversation history  
-- Clarification Q&A memory  
+This project demonstrates how **AI + QA Automation** can work together in practical, real-world scenarios.
 
 ---
 
-# 🏗️ Architecture
+## ✨ Key Features
 
+- 📄 **Requirement Analysis** – Converts user stories into testable scenarios  
+- 🧪 **Test Case Generation** – Produces structured test cases in JSON format  
+- 🤖 **AI Agent Workflow** – Modular, extensible agent-based architecture  
+- 🖥 **Enhanced Streamlit UI** (local version)  
+- 🔗 **Jira Xray Synchronization** (local version)  
+- 🧠 **LLM-powered reasoning**  
+- 🐍 **Python-based implementation**
+
+---
+
+## 🛠 Tech Stack
+
+- **Python**
+- **LLM Support**
+  - Gemini (course implementation)
+  - Claude (local enhanced version)
+- **Streamlit** (UI)
+- **Playwright**
+- **PyTest**
+- **SQLite** (memory / context persistence)
+- **Jira / Xray integration**
+
+---
+
+## 🚀 Local Enhancements (Extended Version)
+
+In my local development environment, this project has been extended beyond the course requirements to include:
+
+- ✅ Enhanced Streamlit UI for improved usability
+- ✅ Jira Xray synchronization for managing test cases
+- ✅ LLM flexibility with support for Claude in addition to Gemini
+- ✅ Improved agent coordination and output formatting
+
+These enhancements demonstrate how the project can be adapted and scaled for real-world QA environments.
+
+---
+
+## 📂 Project Structure
+
+```text
+ai-qa-copilot/
+│
+├── agents/               # AI agent logic
+├── core/                 # Core processing logic
+├── ui/                   # Streamlit UI
+├── generate_and_run.py   # Main execution script
+├── requirements.txt
+├── README.md
+└── .env.example
 ```
-                       ┌──────────────────────────┐
-                       │      ConversationAgent    │
-                       │   (UI chat + memory)      │
-                       └──────────────┬────────────┘
-                                      │
-                       ┌──────────────▼─────────────┐
-                       │      ClarifierAgent         │
-                       │ Asks clarifying questions   │
-                       └──────────────┬─────────────┘
-                                      │
-┌─────────────────────────────────────▼─────────────────────────────────────┐
-│                           RequirementAgent                                 │
-│    Extracts stories, flows, acceptance criteria, dependencies              │
-└───────────────────────────────┬───────────────────────────────────────────┘
-                                │
-                       ┌────────▼─────────┐
-                       │  TestCaseAgent   │
-                       │ Generates full   │
-                       │ JSON test suites │
-                       └────────┬─────────┘
-                                │
-                       ┌────────▼─────────┐
-                       │ AutomationAgent  │
-                       │ Generates POM +  │
-                       │ PyTest code      │
-                       └────────┬─────────┘
-                                │
-                       ┌────────▼─────────┐
-                       │ ExecutionAgent   │
-                       │ Runs tests       │
-                       └────────┬─────────┘
-                                │
-                       ┌────────▼─────────┐
-                       │    JiraAgent     │
-                       │ Publishes tests  │
-                       │ + run results    │
-                       └──────────────────┘
-```
+## ⚙️ Setup & Installation
 
----
-
-# 📂 Project Structure
-
-```
-option_a_ai_heavy_full/
-│
-├── agents/
-│   ├── llm_client.py
-│   ├── requirement_agent.py
-│   ├── testcase_agent.py
-│   ├── automation_agent.py
-│   ├── execution_agent.py
-│   ├── jira_agent.py
-│   ├── conversation_agent.py
-│   ├── clarifier_agent.py
-│
-├── ui/
-│   ├── streamlit_app.py
-│
-├── memory/
-│   ├── persistent.py
-│
-├── tools/
-│   ├── figma_tool.py
-│
-├── generated_tests/
-├── uploads/
-├── generate_and_run.py
-├── config_env.py
-└── README.md
-```
-
----
-
-# ⚙️ Setup Instructions
-
-### 1. Clone the repository  
-```bash
-git clone <YOUR_GITHUB_REPO_URL>
+# 1️⃣ Clone the repository
+git clone https://github.com/janani2sulthan/ai-qa-copilot.git
 cd ai-qa-copilot
-```
 
-### 2. Create virtual environment  
-```bash
-python3 -m venv venv
-source venv/bin/activate
+# 2️⃣ Create virtual environment & install dependencies
+python -m venv venv
+source venv/bin/activate   # Mac/Linux
+venv\Scripts\activate      # Windows
+
 pip install -r requirements.txt
-```
 
-### 3. Add `.env` file  
-```
-GOOGLE_API_KEY=xxxx
-FIGMA_TOKEN=xxxx
-JIRA_BASE=https://yourcompany.atlassian.net
-JIRA_EMAIL=you@example.com
-JIRA_API_TOKEN=xxxx
-```
+# 3️⃣ Configure Environment Variables
 
----
+Create a .env file using .env.example and add your own API keys:
+GOOGLE_API_KEY=your_google_api_key
+CLAUDE_API_KEY=your_claude_api_key
+JIRA_API_TOKEN=your_jira_token
 
-# ▶️ Running the App
+# ▶️ How to Run
 
-## **Streamlit UI**
-```bash
-streamlit run ui/streamlit_app.py
-```
-
-Once opened, you can:
-- Upload screenshots  
-- Paste story text  
-- Chat with agent  
-- Generate test cases  
-- Generate automation  
-- Run tests  
-- Publish to Jira  
-
-## **CLI Pipeline**
-```bash
+Run the main script to generate test cases:
 python generate_and_run.py
+Input can be a user story, Figma links, screenshots  or requirement text.
+Output will be structured test cases in JSON format.
+
 ```
 
-Executes the entire workflow automatically.
-
----
-
-# 🧪 Example Generated Test Case
+```
+### 🧪 Example Generated Test Case
 
 ```json
 {
@@ -222,9 +125,8 @@ Executes the entire workflow automatically.
   ]
 }
 ```
-
----
-
+````
+````
 # 🧪 Example Generated Automation (PyTest + Playwright and Behave(Gherkin))
 
 ```python
@@ -251,186 +153,26 @@ Feature: Login
     And I click login
     Then I should see an error message
 ```
+### 🎯 Learning Outcomes
 
-
-# Worked Example
----
-
-### 📌 Input: User Story
-
-```text
-As a user, I want to log into the application using my email and password so that I can access my dashboard.
-
-Acceptance Criteria:
-- User can enter email
-- User can enter password
-- Login button becomes enabled when both fields are filled
-- Show error message for invalid credentials
-- Redirect to dashboard on successful login
+Through this project, I gained experience in:
+	•	Designing AI agent-based systems
+	•	Applying LLMs to QA workflows
+	•	Integrating AI with QA automation concepts
+	•	Extending course projects into real-world solutions
+``` 
 ```
-
-### 🧠 Step 1 — RequirementAgent Output (Extracted Requirements)
+### 🚧 Future Enhancements
+	•	CI/CD pipeline integration
+	•	Advanced test execution and reporting
+	•	Role-based access in UI
+	•	Additional LLM support
+	•	Production-ready deployment
+>>>>>>> 9c6ef1d (updated readme)
 
 ```
-Flows:
-- Valid login flow
-- Invalid login flow
-
-Validations:
-- Email field must allow valid email formats
-- Password required
-- Login button enabled only when inputs are valid
-
-Edge Cases:
-- Empty fields
-- Incorrect password
-- Invalid email format
+``` 
+###🙌 Acknowledgements
+	•	Google – AI Agents Intensive Course
+	•	Kaggle – Learning platform and resources
 ```
-
-### 🧪 Step 2 — TestCaseAgent Output (Structured JSON Testcases)
-
-```json
-{
-  "feature_id": "login",
-  "test_cases": [
-    {
-      "id": "TC_LOGIN_001",
-      "title": "Login with valid credentials",
-      "priority": "P0",
-      "type": "functional",
-      "steps": [
-        "Open login page",
-        "Enter valid email",
-        "Enter valid password",
-        "Click Login"
-      ],
-      "expected": "User is redirected to dashboard"
-    },
-    {
-      "id": "TC_LOGIN_002",
-      "title": "Login with invalid credentials",
-      "priority": "P1",
-      "type": "negative",
-      "steps": [
-        "Open login page",
-        "Enter valid email",
-        "Enter invalid password",
-        "Click Login"
-      ],
-      "expected": "Error message displayed"
-    }
-  ]
-}
-```
-
-### 🤖 Step 3 — AutomationAgent Output (Playwright + PyTest)
-
-```python
-def test_login_valid(page):
-    page.goto("https://app.example.com/login")
-    page.fill("#email", "user@example.com")
-    page.fill("#password", "Correct@123")
-    page.click("button[type=submit']")
-    assert "/dashboard" in page.url
-```
-
-### 🚀 Step 4 — ExecutionAgent Output
-
-```output
-Test Execution Summary:
-✓ 2 tests passed  
-⏱ Duration: 3.2s  
-Logs saved to /generated_tests/logs/login/
-```
-
-### 📌 Step 5 — JiraAgent Output
-```
-✓ Testcases uploaded to JIRA-123  
-✓ Execution results attached  
-```
-
-# ⚠️ Limitations & Future Work
-
-Although AI QA Co-Pilot is already powerful, the following areas can be improved for enterprise-level robustness:
-
----
-
-### 🚧 Current Limitations
-
-1. LLM-Generated Automation Is Not Always Deterministic
-	•	Playwright selectors may vary slightly between runs.
-	•	Dynamic IDs or complex shadow DOM structures require extra post-processing.
-
-2. BDD (Gherkin) Support Is Basic
-	•	Feature files are generated successfully,
-but step definition auto-generation is limited.
-
-3. Limited Vision Validation
-	•	Screenshot understanding works for simple UI screens.
-	•	Complex UI (carousels, nested modals) may require manual validation.
-
-4. Jira/Xray Schema Variability
-	•	Different Jira installations have different fields,
-which may require custom mapping.
-
-5. No Full “CI Pipeline Runner” Yet
-	•	Tests execute locally.
-	•	GitHub Actions/Cloud Run execution is possible but not fully integrated.
-
-6. Memory Store Not Optimized for Large-Scale QA Data
-	•	SQLite is ideal for single-user development.
-	•	For multi-user enterprise mode, Postgres or Redis-based memory would be preferable.
-
-----
-
-# 🚀 Future Enhancements
-
-1. Auto-Fixing Failing Automation Scripts
-	•	Rerun tests, detect failing selectors, regenerate only broken steps.
-
-2. Full BDD Lifecycle Support
-	•	Auto-generate step definitions
-	•	Auto-map steps to UI actions automatically
-
-3. Deployment-ready Cloud Agent Runtime
-	•	One-click deploy to GCP Cloud Run / Streamlit Cloud.
-
-4. Multi-Agent Parallel Execution
-	•	Generate test cases + automation + Jira updates in parallel.
-
-5. Vision+Figma Deep Layout Understanding
-	•	Detect clickable regions, text inputs, component types automatically.
-
-6. Enterprise Memory System
-	•	Semantic memory with vector embedding stores for 100+ features.
-
-7. API Monitoring & Contract Testing
-	•	Automatic test generation for OpenAPI Specs
-	•	API drift detection
-
----
-
-# 📌 Tech Used
-
-- **Python**
-- **Gemini API**
-- **Streamlit**
-- **Playwright**
-- **PyTest**
-- **SQLite Memory Store**
-- **Figma REST API**
-- **Jira REST API**
-
----
-
-# ⭐ Final Notes  
-This project demonstrates:
-- Multi-agent reasoning  
-- Memory + stateful sessions  
-- Tool integrations  
-- Code generation & execution  
-- Enterprise workflow automation  
-- Real-world QA engineering  
-
-An end-to-end autonomous QA system built for production-grade environments.
-
